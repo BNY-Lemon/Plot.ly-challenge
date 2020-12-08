@@ -26,6 +26,7 @@ function optionChanged(dropdownid) {
     // execute functions that populate the charts with new data
     demoTable(currentMetadata);
     drawBar(currentSample);
+    drawBubble(currentSample);
 };
 
 // Populate the demographic table
@@ -49,8 +50,10 @@ function drawBar(currentSample) {
     console.log(currentSample);
     // set up params required by plotly
     var trace = {
+        // slice to get the first 10 values, reverse to get bar chart to swap lowest/highest
         x: currentSample.sample_values.slice(0,9).reverse(),
-        y: currentSample.otu_labels.slice(0,9).reverse(),
+        y: currentSample.otu_ids.map(id => `OTU ${id}`).slice(0,9).reverse(),
+        hovertext: currentSample.otu_labels.slice(0,9).reverse(),
         type: 'bar',
         orientation: 'h'
     };
@@ -58,4 +61,17 @@ function drawBar(currentSample) {
     Plotly.newPlot('bar', [trace])
 };
 
-// Draw the guage plot
+// Draw the bubble chart
+function drawBubble(currentSample) {
+    var trace = {
+        x: currentSample.otu_ids,
+        y: currentSample.sample_values,
+        text: currentSample.otu_labels,
+        mode: 'markers',
+        marker: {
+            size: currentSample.sample_values,
+            color: currentSample.otu_ids
+        }
+    };
+    Plotly.newPlot('bubble', [trace])
+};
