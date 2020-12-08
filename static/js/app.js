@@ -25,6 +25,7 @@ function optionChanged(dropdownid) {
     console.log(currentMetadata);
     // execute functions that populate the charts with new data
     demoTable(currentMetadata);
+    drawBar(currentSample);
 };
 
 // Populate the demographic table
@@ -44,6 +45,17 @@ function demoTable(currentMetadata) {
 };
 
 // Draw horizontal bar chart using plotly
-function drawBar() {
-
+function drawBar(currentSample) {
+    console.log(currentSample);
+    // set up params required by plotly
+    var trace = {
+        x: currentSample.sample_values.slice(0,9).reverse(),
+        y: currentSample.otu_labels.slice(0,9).reverse(),
+        type: 'bar',
+        orientation: 'h'
+    };
+    // draw the plot
+    Plotly.newPlot('bar', [trace])
 };
+
+// Draw the guage plot
