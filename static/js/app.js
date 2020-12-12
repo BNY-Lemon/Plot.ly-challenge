@@ -1,4 +1,4 @@
-const url = "../data/samples.json"
+const url = "data/samples.json"
 let data;
 
 // Load the data once from json file
