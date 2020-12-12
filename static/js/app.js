@@ -93,3 +93,9 @@ function drawGauge(currentMetadata) {
     var layout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
     Plotly.newPlot('gauge', data, layout);
 }
+
+  // When browser loads, optionChanged() is called 
+  optionChanged();
+  
+  // When browser window is resized, optionChanged() is called
+  d3.select(window).on("resize", optionChanged);
